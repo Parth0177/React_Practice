@@ -3,7 +3,7 @@ import './Sidebar.css'
 import {assets} from '../../assets/assets'
 
 function Sidebar() {
-  return (
+    return (
     <div className='sidebar'>
         <div className="top">
             <img className='menu' src={assets.menu_icon} alt=''/>
@@ -23,11 +23,15 @@ function Sidebar() {
             <div className='bottom-item'>
                 <img src={assets.question_icon} alt=''/>
                 <p>Help</p>
+                <img src={assets.history_icon} alt=''/>
+                <p>History</p>
+                <img src={assets.setting_icon} alt=''/>
+                <p>Settings</p>
             </div>
         </div>
 
     </div>
-  )
+    )
 }
 
 export default Sidebar
