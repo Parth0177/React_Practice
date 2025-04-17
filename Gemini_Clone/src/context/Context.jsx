@@ -1,46 +1,84 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import main from "../config/gemini";
-import { useState } from "react";
+
+export const Context = createContext();
+
+const ContextProvider = (props) => {
+
+    const [prevPrompts, setPrevPrompts] = useState([]);
+    const [input, setInput] = useState("");
+    const [recentPrompt, setRecentPrompt] = useState("");
+    const [showResult, setShowResult] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [resultData, setResultData] = useState("")
 
 
-export const Context=createContext();
-const ContextProvider=(props)=>{
-
-    const [input,setInput]=useState('');
-    const [recentPrompt,setRecentPrompt]=useState('');
-    const [previousPrompt,setPreviousPrompt]=useState([]);
-    const [showresult,setShowResult]=useState(false);
-    const [loading,setLoading]=useState(false);
-    const [result,setResult]=useState('');
-
-    const onSent= async(prompt)=>{
-        setResult('')
-        setLoading(true)
-        setShowResult(true)
-        setRecentPrompt(input)
-        const response = await main(input)
-        setResult(response)
-        setLoading(false)
-        setInput('')
+    function delayPara(index, nextWord) {
+        setTimeout(function () {
+            setResultData(prev => prev + nextWord)
+        }, 75 * index);
     }
 
-    const contextValue={
-        previousPrompt,
-        setPreviousPrompt,
+
+    const onSent = async (prompt) => {
+
+        setResultData("")
+        setLoading(true)
+        setShowResult(true)
+        let response;
+        if (prompt !== undefined) {
+            response = await main(prompt);
+            setRecentPrompt(prompt)
+        }
+        else {
+            setPrevPrompts(prev => [...prev, input]);
+            setRecentPrompt(input)
+            response = await main(input);
+        }
+        let responseArray = response.split('**');
+        let newArray = "";
+        for (let i = 0; i < responseArray.length; i++) {
+            if (i === 0 || i % 2 !== 1) {
+                newArray += responseArray[i]
+            }
+            else {
+                newArray += "<b>" + responseArray[i] + "</b>"
+            }
+        }
+        console.log(newArray);
+        responseArray = newArray.split('*').join("</br>").split(" ");
+        for (let i = 0; i < responseArray.length; i++) {
+            const nextWord = responseArray[i];
+            delayPara(i, nextWord + " ")
+        }
+        setLoading(false);
+        setInput("")
+    }
+
+    const newChat = async () => {
+        setLoading(false);
+        setShowResult(false);
+    }
+
+    const contextValue = {
+        prevPrompts,
+        setPrevPrompts,
         onSent,
         setRecentPrompt,
         recentPrompt,
-        showresult,
+        showResult,
         loading,
-        result,
+        resultData,
         input,
         setInput,
-
+        newChat
     }
-    return(
+
+    return (
         <Context.Provider value={contextValue}>
             {props.children}
         </Context.Provider>
     )
 }
-export default ContextProvider;
+
+export default ContextProvider
