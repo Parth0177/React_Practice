@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import main from "../config/gemini";
 import { useState } from "react";
-import { on } from "events";
+
 
 export const Context=createContext();
 const ContextProvider=(props)=>{
@@ -14,7 +14,14 @@ const ContextProvider=(props)=>{
     const [result,setResult]=useState('');
 
     const onSent= async(prompt)=>{
-        await main(prompt)
+        setResult('')
+        setLoading(true)
+        setShowResult(true)
+        setRecentPrompt(input)
+        const response = await main(input)
+        setResult(response)
+        setLoading(false)
+        setInput('')
     }
 
     const contextValue={
