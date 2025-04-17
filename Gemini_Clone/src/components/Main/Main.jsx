@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Main.css'
 import { assets } from '../../assets/assets'
 
 const Main = () => {
+
+    const {onSent,recentPrompt,showresult,loading,result,setInput,input}= useContext(Context);
+
   return (
     <div className="main">
         <div className="nav">
-            <p>Gemini</p>
+            <>Gemini 2.0 Flash </>
             <img src={assets.user_icon} alt="" />
         </div>
         <div className="main-container">
