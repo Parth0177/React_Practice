@@ -1,0 +1,71 @@
+.container{
+    display: flex;
+    justify-content: center;
+    animation: fadeIn 1.5s;
+}
+
+
+.header{
+    height: 7vh;
+    background-color: rgb(207, 211, 211);
+    width: 600px;
+    border-radius: 50px;
+    position: fixed;
+}
+
+.header .nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.header .other{
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.header input{
+    border: none;
+    width: 200px;
+    height: 3vh;
+    border-radius: 50px;
+    padding-left: 10px;
+    align-items: center;
+}
+
+.header input:hover{
+    background-color: rgb(244, 240, 240);
+    height:3.5vh;
+}
+
+
+.header .other p:hover{
+    background-color: rgb(142, 142, 142);
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+
+.header .other button{
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.header .other button:hover{
+    background-color: rgb(175, 173, 170);
+    border-radius: 50px;
+}
+
+
+@keyframes container{
+    0% {
+        background-position: -800px 0
+    }
+    100% {
+        background-position: 800px 0
+    }
+}
