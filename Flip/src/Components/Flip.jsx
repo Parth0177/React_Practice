@@ -11,7 +11,7 @@ const Flip = () => {
   };
 
   return (
-    <div className="text-center mt-19">
+    <div className="text-center mt-25">
       <h1 className="text-3xl font-bold mb-4">Heads or Tails</h1>
       <button
         onClick={flipCoin}
